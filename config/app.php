@@ -177,6 +177,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        // Hackerearth
+        Ankitjain28may\HackerEarth\HackerEarthServiceProvider::class,
+
     ],
 
     /*

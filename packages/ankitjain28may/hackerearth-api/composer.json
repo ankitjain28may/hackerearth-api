@@ -1,0 +1,13 @@
+{
+    "name": "ankitjain28may/hackerearth-api",
+    "description": "PHP and Laravel HackerEarth API Wrapper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ankitjain28may",
+            "email": "ankitjain28may77@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
