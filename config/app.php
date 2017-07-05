@@ -229,6 +229,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'HackerEarth' => Ankitjain28may\HackerEarth\Facades\HackerEarth::class,
     ],
 
 ];
