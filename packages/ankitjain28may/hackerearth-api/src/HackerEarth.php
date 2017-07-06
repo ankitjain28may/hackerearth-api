@@ -2,6 +2,8 @@
 
 namespace Ankitjain28may\HackerEarth;
 
+use Ankitjain28may\HackerEarth\Code\Compile;
+
 /**
 * 
 */
@@ -19,12 +21,34 @@ class HackerEarth
 	public function __call($method, $args)
     {
         $arguments = array_merge([$method], $args);
-        return $args;
-        return call_user_func_array([$this, 'api'], $arguments);
+        return call_user_func_array([$this, 'main'], $arguments);
     }
 
-    public function FunctionName($value='')
+    public function main()
     {
-    	# code...
+    	$args = func_get_args();
+        $method = strtolower($args[0]);
+
+
+        if (count($args) > 1) {
+            $params = array_slice($args, 1);
+        }
+
+        switch ($method) {
+            case 'compile':
+                $this->ob = new Compile($this->config);
+                return $this->ob->getData($params);
+                break;
+            
+            case 'compilefile':
+                $this->ob = new Compile($this->config);
+                return $this->ob->getDataFromFile($params);
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+        
     }
 }

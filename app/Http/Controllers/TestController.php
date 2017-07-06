@@ -7,11 +7,10 @@ use HackerEarth;
 
 class TestController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
-    	return HackerEarth::index(["api_key"     => 'hackerrank_app_key']);
-
-    	$ob = new HackerEarth(["api_key"     => 'hackerrank_app_key']);
-    	return $ob->index();
-    }
+    	return HackerEarth::compilefile("PHP", realpath($request->file('file')) , "dg dg ");
+    	/*return HackerEarth::compile("PHP", "<?php echo 'helloworld!'; ?>", ["dg"]);
+    */}
 }
+
