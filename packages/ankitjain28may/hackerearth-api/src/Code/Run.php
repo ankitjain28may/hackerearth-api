@@ -11,9 +11,9 @@ use GuzzleHttp\Client;
 /**
 * 
 */
-class Compile
+class Run
 {
-	protected $http = "https://api.hackerearth.com/v3/code/compile/";
+	protected $http = "https://api.hackerearth.com/v3/code/run/";
 	protected $client;
 	protected $apiKey;
 	protected $config;
