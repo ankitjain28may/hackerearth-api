@@ -2,12 +2,25 @@
     "name": "ankitjain28may/hackerearth-api",
     "description": "PHP and Laravel HackerEarth API Wrapper",
     "license": "MIT",
+    "type": "library",
+    "keywords": ["laravel", "hackerearth-api", "HackerEarth", "laravel-hackerearth-package", "code-compile", "code-run", "compile", "run"],
     "authors": [
         {
             "name": "ankitjain28may",
             "email": "ankitjain28may77@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Ankitjain28may\\HackerEarth\\": "src/"
+        },
+        "files": [
+        ]
+    },
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "php": ">=5.6.4",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "prefer-stable": true
 }
