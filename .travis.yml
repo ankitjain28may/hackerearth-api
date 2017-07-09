@@ -11,7 +11,7 @@ script:
   - mkdir -p build/logs
   # - php vendor/bin/phpcbf --standard=ruleset.xml src
   # - php vendor/bin/phpcs --standard=ruleset.xml src
-  - phpunit --coverage-clover build/logs/clover.xml
+  - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - php vendor/bin/coveralls -v
