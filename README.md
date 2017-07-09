@@ -1,5 +1,10 @@
 # HackerEarth API
 
+[![Latest Stable Version](https://poser.pugx.org/ankitjain28may/hackerearth-api/v/stable)](https://packagist.org/packages/ankitjain28may/hackerearth-api)
+[![Build Status](https://travis-ci.org/ankitjain28may/hackerearth-api.svg?branch=master)](https://travis-ci.org/ankitjain28may/hackerearth-api)
+[![Coverage Status](https://coveralls.io/repos/github/ankitjain28may/hackerearth-api/badge.svg?branch=master)](https://coveralls.io/github/ankitjain28may/hackerearth-api?branch=master)
+[![Packagist](https://img.shields.io/packagist/dt/ankitjain28may/hackerearth-api.svg?style=flat-square)](https://packagist.org/packages/ankitjain28may/hackerearth-api)
+
 
 This package is using HackerEarth api to Compile and Run the code.
 
