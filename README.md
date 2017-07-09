@@ -3,7 +3,7 @@
 
 This package is using HackerEarth api to Compile and Run the code.
 
-HackerEarth Code Checker API. Extremely simple REST API. Supports more than a dozen languages. All powered by reliable HackerEarth servers. You can use your own scoring system or build your own online judge. 
+HackerEarth Code Checker API. Extremely simple REST API. Supports more than a dozen languages. All powered by reliable HackerEarth servers. You can use your own scoring system or build your own online judge.
 
 ## Installation
 
@@ -70,16 +70,16 @@ use Ankitjain28may\HackerEarth\HackerEarth;
 $config = [
     	"api_key"     => 'hackerearth_app_key',
     ];
-        
- 
+
+
  $hackerearth = new HackerEarth($config);
- 
+
  $result = $hackerearth->Compile('php', '<?php echo "hello World!"; ?>');
- 
+
  var_dump($result);
 
  $result = $hackerearth->Run('php', '<?php echo "hello World!"; ?>');
- 
+
  var_dump($result);
 
  ```
@@ -87,27 +87,39 @@ $config = [
 
 ## For Laravel Usage
 
- ### Code Compile 
+ ### Code Compile
 
  ```php
  use Ankitjain28may\HackerEarth\Facades\HackerEarth;
  //..
  //..
  $result = HackerEarth::Compile('php', '<?php echo "hello World!"; ?>');
- 
+
  dd($result);
  ```
- 
+
  ### Code Run
- 
+
  ```php
  use Ankitjain28may\HackerEarth\Facades\HackerEarth;
  //..
  //..
  $result = HackerEarth::Run('php', '<?php echo "hello World!"; ?>');
- 
+
  dd($result);
  ```
+
+ ## Also Compile and Run files by passing realpath of the uploaded file--
+
+ ```php
+ use Ankitjain28may\HackerEarth\Facades\HackerEarth;
+ //..
+ //..
+ $result = HackerEarth::Run('php', realpath("test.txt"));
+ $result = HackerEarth::Compile('php', realpath("test.txt"));
+
+ ```
+
 
  ## Contribute
 
@@ -117,4 +129,3 @@ $config = [
 
 >Copyright (c) 2017 Ankit Jain - Released under the MIT License
 
- 
