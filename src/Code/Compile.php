@@ -56,12 +56,14 @@ class Compile
 		$data = [
 			'form_params' => [
 				'client_secret' => $this->apiKey,
-				'async'    		=> 0,
+				'async'    		=> 1,
 				'input'			=> (isset($params[2])) ? $params[2] : '',
 				'source'    	=> $this->verifySource($params[1], $file),
 				'lang'    		=> $this->verifyLang($params[0]),
 				'time_limit'    => (isset($params[3])) ? $params[3] : 5,
 				'memory_limit'  => (isset($params[4])) ? $params[4] : 262144,
+				'id'			=> 128,
+				'callback' 		=> 'http://982862fd.ngrok.io/receive'
 			]
 		];
 

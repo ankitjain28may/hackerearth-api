@@ -15,6 +15,7 @@ class HackerEarthServiceProvider extends ServiceProvider
     public function boot()
     {        
         $this->handleConfigs();
+        $this->handleMigrations();
     }
 
     /**
@@ -41,6 +42,16 @@ class HackerEarthServiceProvider extends ServiceProvider
         ]);
 
         $this->mergeConfigFrom($configPath, 'hackerearth');
+    }
+
+    private function handleMigrations()
+    {
+        $migrationPath = realpath(__DIR__ . '/migrations');
+
+        $this->publishes([
+            $migrationPath => base_path('database/migrations'),
+        ]);
+
     }
 
     /**

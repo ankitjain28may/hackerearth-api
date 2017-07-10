@@ -51,6 +51,12 @@ class Run
 		return $source;
 	}
 
+	public function checkOutput($output)
+	{
+		$output = json_decode($output, True);
+		return var_dump($output);
+	}
+
 	public function getData($params = [], $file = 0) {
 
 		$data = [
