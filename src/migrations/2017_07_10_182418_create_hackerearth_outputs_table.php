@@ -13,17 +13,18 @@ class CreateHackerearthOutputsTable extends Migration
      */
     public function up()
     {
-        Schema::table('outputs', function (Blueprint $table) {
+        Schema::create('hackerearth_outputs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code_id');
-            $table->string('async');
-            $table->string('compile_status');
-            $table->string('time_used');
-            $table->string('memory_used');
-            $table->string('output');
-            $table->string('output_html');
-            $table->string('status');
-            $table->string('status_details');
+            $table->string('code_id')->nullable();
+            $table->string('async')->default(0);
+            $table->text('compile_status')->nullable();
+            $table->string('time_used')->nullable();
+            $table->string('memory_used')->nullable();
+            $table->text('output')->nullable();
+            $table->text('output_html')->nullable();
+            $table->string('status')->nullable();
+            $table->text('status_details')->nullable();
+            $table->text('stderr')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +36,7 @@ class CreateHackerearthOutputsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('outputs');
+        Schema::dropIfExists('hackerearth_outputs');
     }
 }
+

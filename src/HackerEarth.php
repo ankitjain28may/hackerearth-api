@@ -12,6 +12,15 @@ class HackerEarth
 {
 
 	protected $config;
+    protected $default = [
+        "lang" => '',
+        "source" => '',
+        "input" => '',
+        "async" => 0,
+        "callback" => '',
+        'time_limit'    => 5,
+        'memory_limit'  => 262144,
+    ];
 
 	
 	function __construct($config)
@@ -25,19 +34,8 @@ class HackerEarth
         return call_user_func_array([$this, 'main'], $arguments);
     }
 
-    public function main()
-    {
-    	$args = func_get_args();
-        $method = strtolower($args[0]);
 
-        $params = [];
-
-        if (count($args) > 1) {
-            $params = array_slice($args, 1);
-        } else {
-            return json_encode(["message" => "Invalid Input"]);
-        }
-
+    public function call($method, $params) {
         switch ($method) {
             case 'compile':
                 $this->ob = new Compile($this->config);
@@ -63,6 +61,28 @@ class HackerEarth
                 return json_encode(["message" => "Invalid method call"]);
                 break;
         }
-        
+    }
+
+    public function main()
+    {
+        $result = [];
+
+    	$args = func_get_args();
+        $method = strtolower($args[0]);
+        $args = array_slice($args, 1)[0];
+
+        if (count($args)) {
+            $params = $this->default;
+            foreach ($args as $index => $data) {
+                foreach ($data as $key => $value) {
+                    $params[$key] = $value;
+                }
+                $result[] = json_decode($this->call($method, $params), True);
+            }
+        } else {
+            return json_encode(["message" => "Invalid Input"]);
+        }
+
+        return json_encode($result);
     }
 }

@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Client;
+use Ankitjain28may\HackerEarth\Models\Output;
 
 /**
 * 
@@ -50,29 +51,27 @@ class Run
 		}
 		return $source;
 	}
-
-	public function checkOutput($output)
-	{
-		$output = json_decode($output, True);
-		return var_dump($output);
-	}
-
+	
 	public function getData($params = [], $file = 0) {
-
 		$data = [
 			'form_params' => [
 				'client_secret' => $this->apiKey,
-				'async'    		=> 0,
-				'input'			=> (isset($params[2])) ? $params[2] : '',
-				'source'    	=> $this->verifySource($params[1], $file),
-				'lang'    		=> $this->verifyLang($params[0]),
-				'time_limit'    => (isset($params[3])) ? $params[3] : 5,
-				'memory_limit'  => (isset($params[4])) ? $params[4] : 262144,
+				'async'    		=> $params['async'],
+				'input'			=> $params['input'],
+				'source'    	=> $this->verifySource($params['source'], $file),
+				'lang'    		=> $this->verifyLang($params['lang']),
+				'time_limit'    => $params['time_limit'], 
+				'memory_limit'  => $params['memory_limit']
 			]
 		];
 
+		if ($params['async'] == 1) {
+			$data['form_params']['id'] = Output::getId();
+			$data['form_params']['callback'] = $params['callback'];
+		}
+
 		if (count($this->error)) {
-			return json_encode($this->error);
+			return $this->error;
 		}
 	
 		try {
@@ -83,13 +82,13 @@ class Run
 			}
 
         } catch (RequestException $e) {
-            return $e;
+            return json_encode($e->getMessage());
         } catch (ClientException $e) {
-            return $e->getResponse();
+            return json_encode($e->getMessage());
         } catch (BadResponseException $e) {
-            return $e;
+            return json_encode($e->getMessage());
         } catch (ServerException $e) {
-            return $e;
+            return json_encode($e->getMessage());
         }
 	}
 

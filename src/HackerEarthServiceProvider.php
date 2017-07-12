@@ -52,6 +52,9 @@ class HackerEarthServiceProvider extends ServiceProvider
             $migrationPath => base_path('database/migrations'),
         ]);
 
+        // $this->loadMigrationsFrom($migrationPath);
+
+
     }
 
     /**
