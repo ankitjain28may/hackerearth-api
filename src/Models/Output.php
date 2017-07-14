@@ -15,6 +15,7 @@ class Output extends Model
         'code_id', 'async', 'compile_status', 'time_used', 'memory_used', 'output', 'output_html', 'status', 'status_details',
     ];
 
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -25,9 +26,17 @@ class Output extends Model
 
     protected $table = "hackerearth_outputs";
 
-    public static function getId($id = "") {
+    public static function getHashId($id = "") {
     	$row = Self::firstOrCreate(["id" => $id]);
     	return bin2hex($row->id);
+    }
+
+    public static function getId($hash_id = "") {
+        $hash_id = trim($hash_id);
+        if ($hash_id!="" && strlen($hash_id)%2 == 0 && !preg_match("/[a-z]/i", $hash_id)) {
+            return hex2bin($hash_id);
+        }
+        return null;
     }
 
     public static function saveResult($data = []) {
@@ -67,7 +76,7 @@ class Output extends Model
         $output->output             = (isset($data['run_status']['output'])) ? $data['run_status']['output'] : "";
         $output->output_html        = (isset($data['run_status']['output_html'])) ? $data['run_status']['output_html'] : "";
         $output->status             = (isset($data['run_status']['status'])) ? $data['run_status']['status'] : "";
-        $output->status_details     = (isset($data['run_status']['status_details'])) ? $data['run_status']['status_details'] : "";
+        $output->status_details     = (isset($data['run_status']['status_detail'])) ? $data['run_status']['status_detail'] : "";
         $output->stderr             = (isset($data['run_status']['stderr'])) ? $data['run_status']['stderr'] : "";
         return $output;
     }

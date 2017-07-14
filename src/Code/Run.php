@@ -66,7 +66,7 @@ class Run
 		];
 
 		if ($params['async'] == 1) {
-			$data['form_params']['id'] = Output::getId();
+			$data['form_params']['id'] = Output::getHashId($params['id']);
 			$data['form_params']['callback'] = $params['callback'];
 		}
 

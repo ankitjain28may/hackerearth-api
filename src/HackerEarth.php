@@ -18,6 +18,7 @@ class HackerEarth
         "input" => '',
         "async" => 0,
         "callback" => '',
+        'id' => '',
         'time_limit'    => 5,
         'memory_limit'  => 262144,
     ];
