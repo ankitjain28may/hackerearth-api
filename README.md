@@ -36,6 +36,7 @@ Now run this command in your terminal to publish this package resources:
 
 ```
 php artisan vendor:publish --provider="Ankitjain28may\HackerEarth\HackerEarthServiceProvider"
+php artisan vendor:publish --tag=migrations
 ```
 
 after publishing your config file then open `config/hackerearth.php` and add your hackerearth app key:
@@ -64,10 +65,45 @@ Thats it.
 
 ## API List
 
-- Run($lang, $source, $input, $time_limit, $memory_limit)
-- Compile($lang, $source, $input, $time_limit, $memory_limit)
+```php
+    $data = [
+        "lang" => '',
+        "source" => '',
+        "input" => '',
+        "async" => 0,                   // default (1 => async req and 0 => sync req)
+        "callback" => '',
+        'id' => '',
+        'time_limit'    => 5,           // default
+        'memory_limit'  => 262144,      // default
+    ]
+```
 
-## Usages
+- Run([$data, ..])
+- RunFile([$data, ..])
+- Compile([$data, ..])
+- CompileFile([$data, ..])
+
+## Asynchronous Request
+
+- Set `async = 1`.
+- You need to add the callback url, Output will be returned directly to the callback url as a post request.
+
+## Synchronous Request
+
+- Set `async = 0`.
+- Output will be returned with the request's response.
+
+
+## For Core PHP Usage
+
+- create the database
+```
+create database [database name]
+```
+- import table
+```
+mysql -u[user] -p[password] [database name] < vendor\ankitjain28may\hackerearth-api\src\Database\migrate.sql
+```
 
 ```php
 use Ankitjain28may\HackerEarth\HackerEarth;
@@ -79,13 +115,34 @@ $config = [
 
  $hackerearth = new HackerEarth($config);
 
- $result = $hackerearth->Compile('php', '<?php echo "hello World!"; ?>');
+ $data = [
+    "lang" => 'php',
+    "source" => '<?php echo "hello World!"; ?>'
+ ];
+
+ $result = $hackerearth->Compile([$data]);
 
  var_dump($result);
 
- $result = $hackerearth->Run('php', '<?php echo "hello World!"; ?>');
+ $result = $hackerearth->Run([$data]);
 
  var_dump($result);
+
+ // Asynchronous
+
+ $data = [
+    "lang" => 'php',
+    "source" => '<?php echo "hello World!"; ?>',
+    "async" => 1,
+    "callback" => 'http://callback_url',
+    "id" => 12  // Id from the db where to save or update response
+ ]
+
+ $result = $hackerearth->Run([$data]);
+
+ vardump($result);
+
+ // Response at Callback URL will need to save to DB with reference to the ID, Id returned is encoded using `bin2hex` which can be decoded using `hex2bin`.
 
  ```
 
@@ -95,33 +152,105 @@ $config = [
  ### Code Compile
 
  ```php
+
  use Ankitjain28may\HackerEarth\Facades\HackerEarth;
+ use Ankitjain28may\HackerEarth\Models\Output;
  //..
  //..
- $result = HackerEarth::Compile('php', '<?php echo "hello World!"; ?>');
+
+ $data = [
+    "lang" => 'php',
+    "source" => '<?php echo "hello World!"; ?>'
+ ];
+
+ $result = HackerEarth::Compile([$data, ..]);
 
  dd($result);
+
+ // Asynchronous
+
+ $data = [
+    "lang" => 'php',
+    "source" => '<?php echo "hello World!"; ?>',
+    "async" => 1,
+    "callback" => 'http://callback_url',
+    "id" => 12  // Id from the db where to save or update response
+ ]
+
+ $result = $hackerearth->Compile([$data]);
+
+ dd($result);
+
+  OR
+
+ Output::saveResult($result); // Save directly to the DB
+
+
+ // Response at Callback URL will save to DB with reference to the ID
+
+ Output::savePayload(json_decode($_POST['payload'], True));
+
  ```
 
  ### Code Run
 
  ```php
+
  use Ankitjain28may\HackerEarth\Facades\HackerEarth;
+ use Ankitjain28may\HackerEarth\Models\Output;
+
  //..
  //..
- $result = HackerEarth::Run('php', '<?php echo "hello World!"; ?>');
+
+ $data = [
+    "lang" => 'php',
+    "source" => '<?php echo "hello World!"; ?>'
+ ];
+
+ $result = HackerEarth::Run([$data, ..]);
 
  dd($result);
+
+ // Asynchronous
+
+ $data = [
+    "lang" => 'php',
+    "source" => '<?php echo "hello World!"; ?>',
+    "async" => 1,
+    "callback" => 'http://callback_url',
+    "id" => 12  // Id from the db where to save or update response
+ ]
+
+ $result = $hackerearth->Run([$data]);
+
+ dd($result);
+
+  OR
+
+ Output::saveResult($result); // Save directly to the DB
+
+
+ // Response at Callback URL will save to DB with reference to the ID
+
+ Output::savePayload(json_decode($_POST['payload'], True));
+
  ```
 
  ## Also Compile and Run files by passing realpath of the uploaded file--
 
  ```php
  use Ankitjain28may\HackerEarth\Facades\HackerEarth;
+
  //..
  //..
- $result = HackerEarth::Run('php', realpath("test.txt"));
- $result = HackerEarth::Compile('php', realpath("test.txt"));
+
+ $data = [
+    "lang" => 'php',
+    "source" => realpath("test.txt")
+ ];
+
+ $result = HackerEarth::RunFile([$data]);
+ $result = HackerEarth::CompileFile([$data]);
 
  ```
 

@@ -10,8 +10,10 @@ use GuzzleHttp\Client;
 use Ankitjain28may\HackerEarth\Models\Output;
 
 /**
-* 
-*/
+ *
+ * Run class to fetch the result from HackerEarth APIs
+ *
+ */
 class Run
 {
 	protected $http = "https://api.hackerearth.com/v3/code/run/";
@@ -19,7 +21,7 @@ class Run
 	protected $apiKey;
 	protected $config;
 	protected $error = [];
-	
+
 	public function __construct($config)
 	{
 		$this->config = $config;
@@ -38,7 +40,7 @@ class Run
 	public function verifySource($source, $file) {
 		if (empty($source)) {
 			$this->error['source'] = "Empty Program source";
-			return 0;	
+			return 0;
 		}
 
 		if ($file) {
@@ -51,7 +53,7 @@ class Run
 		}
 		return $source;
 	}
-	
+
 	public function getData($params = [], $file = 0) {
 		$data = [
 			'form_params' => [
@@ -60,7 +62,7 @@ class Run
 				'input'			=> $params['input'],
 				'source'    	=> $this->verifySource($params['source'], $file),
 				'lang'    		=> $this->verifyLang($params['lang']),
-				'time_limit'    => $params['time_limit'], 
+				'time_limit'    => $params['time_limit'],
 				'memory_limit'  => $params['memory_limit']
 			]
 		];
@@ -73,7 +75,7 @@ class Run
 		if (count($this->error)) {
 			return $this->error;
 		}
-	
+
 		try {
 
 			$response = $this->client->request('POST', $this->http, $data);

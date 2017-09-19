@@ -26,11 +26,30 @@ class Output extends Model
 
     protected $table = "hackerearth_outputs";
 
+
+    /**
+     *
+     * Get Hash Id by encoding ID (using bin2hex for encoding)
+     *
+     * @param integer $id
+     *
+     * @return integer
+     *
+     */
     public static function getHashId($id = "") {
     	$row = Self::firstOrCreate(["id" => $id]);
     	return bin2hex($row->id);
     }
 
+
+    /**
+     *
+     * Get Id by decoding Hash ID (using hex2bin for decoding)
+     *
+     * @param integer $hash_id
+     *
+     * @return integer
+     */
     public static function getId($hash_id = "") {
         $hash_id = trim($hash_id);
         if ($hash_id!="" && strlen($hash_id)%2 == 0 && !preg_match("/[a-z]/i", $hash_id)) {
@@ -39,6 +58,14 @@ class Output extends Model
         return null;
     }
 
+    /**
+     *
+     * Saving Synchronous Request Data
+     *
+     * @param array $data
+     *
+     * @return integer
+     */
     public static function saveResult($data = []) {
         if (is_null($data)) {
             return json_encode(["error" => "Empty data"]);
@@ -49,8 +76,16 @@ class Output extends Model
         return $output->id;
     }
 
+    /**
+     *
+     * Saving Asynchronous Request Data using id
+     *
+     * @param array $data
+     *
+     * @return integer
+     */
     public static function savePayload($data = [])
-    {   
+    {
     	$id = "";
         $output = [];
     	try {
@@ -66,6 +101,16 @@ class Output extends Model
         return $output->id;
     }
 
+
+    /**
+     *
+     * Put data in Output Object
+     *
+     * @param Output/ $output
+     * @param array   $data
+     *
+     * @return Output/
+     */
     public static function putOutput($output, $data = [])
     {
         $output->code_id            = $data['code_id'];
