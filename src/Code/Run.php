@@ -73,7 +73,7 @@ class Run
 		}
 
 		if (count($this->error)) {
-			return $this->error;
+			return json_encode($this->error);
 		}
 
 		try {

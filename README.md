@@ -183,7 +183,7 @@ $config = [
 
   OR
 
- Output::saveResult($result); // Save directly to the DB
+ Output::saveResult(json_decode($result, True)); // Save directly to the DB
 
 
  // Response at Callback URL will save to DB with reference to the ID
@@ -227,7 +227,7 @@ $config = [
 
   OR
 
- Output::saveResult($result); // Save directly to the DB
+ Output::saveResult(json_decode($result, True)); // Save directly to the DB
 
 
  // Response at Callback URL will save to DB with reference to the ID

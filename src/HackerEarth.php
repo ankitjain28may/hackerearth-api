@@ -6,7 +6,7 @@ use Ankitjain28may\HackerEarth\Code\Compile;
 use Ankitjain28may\HackerEarth\Code\Run;
 
 /**
-* 
+*
 */
 class HackerEarth
 {
@@ -23,7 +23,7 @@ class HackerEarth
         'memory_limit'  => 262144,
     ];
 
-	
+
 	function __construct($config)
 	{
 		$this->config = $config;
@@ -42,7 +42,7 @@ class HackerEarth
                 $this->ob = new Compile($this->config);
                 return $this->ob->getData($params);
                 break;
-            
+
             case 'compilefile':
                 $this->ob = new Compile($this->config);
                 return $this->ob->getData($params, 1);
@@ -52,12 +52,12 @@ class HackerEarth
                 $this->ob = new Run($this->config);
                 return $this->ob->getData($params);
                 break;
-            
+
             case 'runfile':
                 $this->ob = new Run($this->config);
                 return $this->ob->getData($params, 1);
                 break;
-            
+
             default:
                 return json_encode(["message" => "Invalid method call"]);
                 break;
@@ -70,7 +70,11 @@ class HackerEarth
 
     	$args = func_get_args();
         $method = strtolower($args[0]);
-        $args = array_slice($args, 1)[0];
+        if (count($args) > 1) {
+            $args = array_slice($args, 1)[0];
+        } else {
+            return json_encode(["message" => "Invalid Input"]);
+        }
 
         if (count($args)) {
             $params = $this->default;

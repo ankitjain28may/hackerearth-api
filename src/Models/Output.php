@@ -67,13 +67,17 @@ class Output extends Model
      * @return integer
      */
     public static function saveResult($data = []) {
+        $res = [];
         if (is_null($data)) {
             return json_encode(["error" => "Empty data"]);
         }
-        $output = new Output;
-        $output = Self::putOutput($output, $data);
-        $output->save();
-        return $output->id;
+        foreach ($data as $key => $value) {
+            $output = new Output;
+            $output = Self::putOutput($output, $value);
+            $output->save();
+            $res[] = ["id" => $output->id];
+        }
+        return json_encode($res);
     }
 
     /**
@@ -98,7 +102,7 @@ class Output extends Model
     	}
     	$output = Self::putOutput($output, $data);
     	$output->save();
-        return $output->id;
+        return ["id" => $output->id];
     }
 
 
