@@ -10,6 +10,10 @@ This package is using HackerEarth api to Compile and Run the code.
 
 HackerEarth Code Checker API. Extremely simple REST API. Supports more than a dozen languages. All powered by reliable HackerEarth servers. You can use your own scoring system or build your own online judge.
 
+![](https://files.phpclasses.org/graphics/phpclasses/innovation-award-logo.png)
+
+PHP Innovation Award for the PHP package Hacker Earth API [Certification Link](https://www.phpclasses.org/certificate/package/10529.pdf)
+
 ## Installation
 
 Run this command in your terminal from your project directory:
